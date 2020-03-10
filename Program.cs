@@ -18,6 +18,8 @@ namespace Recipe_Application
 
         public Dictionary<Ingredient, int> Ingredients { get; }
 
+        public AllergyWarnings AllergyWarnings { get; }
+
         public List<string> CookingSteps { get; set; }
 
         public string Description { get; }
@@ -37,6 +39,13 @@ namespace Recipe_Application
             CookingSteps = cookingSteps;
             Ingredients = ingredients;
             Commentary = commentary;
+
+            var allergyLists = new List<AllergyWarnings>();
+            foreach (var ingredient in Ingredients)
+            {
+                allergyLists.Add(ingredient.Key.AllergyList);
+            }
+            AllergyWarnings = new AllergyWarnings(allergyLists);
         }
 
         public Dictionary<string, int> getNutritionalValues()
@@ -61,24 +70,6 @@ namespace Recipe_Application
             }
 
             return nutritionDict;
-        }
-
-        public List<string> getAllergyWarnings()
-        {
-            var allergyList = new List<string>{};
-
-            foreach (var ingredient in Ingredients)
-            {
-                foreach (var warning in ingredient.Key.AllergyList)
-                {
-                    if (!allergyList.Contains(warning))
-                    {
-                        allergyList.Add(warning);
-                    }
-                }
-            }
-
-            return allergyList;
         }
 
         public void AddIngredient(Ingredient ingredient, int amount = 1)
@@ -106,14 +97,52 @@ namespace Recipe_Application
 
         public string QuantityUnit { get; }
 
-        public List<string> AllergyList { get; }
+        public AllergyWarnings AllergyList { get; }
 
         public Ingredient(string name, Dictionary<string, int> nutritionalValues, string quantityUnit = "grams", List<string> allergyList = null)
         {
             Name = name;
             NutritionalValues = nutritionalValues;
             QuantityUnit = quantityUnit;
-            AllergyList = allergyList;
+            AllergyList = new AllergyWarnings(allergyList);
+        }
+    }
+
+    class NutritionTable
+    {
+        
+    }
+
+    class AllergyWarnings
+    {
+        public List<string> Warnings { get; }
+
+        public AllergyWarnings()
+        {
+            Warnings = new List<string>();
+        }
+
+        public AllergyWarnings(List<string> warnings)
+        {
+            Warnings = warnings;
+        }
+
+        public AllergyWarnings(List<AllergyWarnings> warningLists)
+        {
+            var newList = new List<string>();
+
+            foreach (var warningList in warningLists)
+            {
+                foreach (var warning in warningList.Warnings)
+                {
+                    if (!newList.Contains(warning))
+                    {
+                        newList.Add(warning);
+                    }
+                }
+            }
+
+            Warnings = newList;
         }
     }
 }
