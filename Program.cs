@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.ComTypes;
+﻿using System.Collections.Generic;
 
 namespace Recipe_Application
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Hello World!");
-        }
+        
     }
 
     class Recipe
@@ -19,6 +14,8 @@ namespace Recipe_Application
         public Dictionary<Ingredient, int> Ingredients { get; }
 
         public AllergyWarnings AllergyWarnings { get; }
+
+        public NutritionTable NutritionTable { get; }
 
         public List<string> CookingSteps { get; set; }
 
@@ -46,11 +43,13 @@ namespace Recipe_Application
                 allergyLists.Add(ingredient.Key.AllergyList);
             }
             AllergyWarnings = new AllergyWarnings(allergyLists);
+
+            NutritionTable = CreateNutritionTable();
         }
 
-        public Dictionary<string, int> getNutritionalValues()
+        public NutritionTable CreateNutritionTable()
         {
-            var nutritionDict = new Dictionary<string, int> { };
+            var nutritionDict = new Dictionary<string, int>();
 
             foreach (var ingredient in Ingredients)
             {
@@ -69,7 +68,7 @@ namespace Recipe_Application
                 }
             }
 
-            return nutritionDict;
+            return new NutritionTable(nutritionDict);
         }
 
         public void AddIngredient(Ingredient ingredient, int amount = 1)
@@ -110,7 +109,17 @@ namespace Recipe_Application
 
     class NutritionTable
     {
-        
+        public Dictionary<string, int> NutritionValues { get; }
+
+        public NutritionTable()
+        {
+            NutritionValues = new Dictionary<string, int>();
+        }
+
+        public NutritionTable(Dictionary<string, int> values)
+        {
+            NutritionValues = values;
+        }
     }
 
     class AllergyWarnings
