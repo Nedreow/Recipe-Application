@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Recipe_Application
 {
-    class NutritionTable
+    public class NutritionTable
     {
         public Dictionary<string, int> NutritionValues { get; }
 

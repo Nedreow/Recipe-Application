@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Recipe_Application
 {
-    class Recipe
+    public class Recipe
     {
         public string Name { get; }
 
@@ -40,7 +40,7 @@ namespace Recipe_Application
                 allergyLists.Add(ingredient.Key.AllergyList);
             }
             AllergyWarnings = new AllergyWarnings(allergyLists);
-
+            
             NutritionTable = CreateNutritionTable();
         }
 

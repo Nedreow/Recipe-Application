@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Recipe_Application
 {
-    class AllergyWarnings
+    public class AllergyWarnings
     {
         public List<string> Warnings { get; }
 
@@ -15,7 +15,14 @@ namespace Recipe_Application
 
         public AllergyWarnings(List<string> warnings)
         {
-            Warnings = warnings;
+            if (warnings == null)
+            {
+                Warnings = new List<string>();
+            }
+            else
+            {
+                Warnings = warnings;
+            }
         }
 
         public AllergyWarnings(List<AllergyWarnings> warningLists)

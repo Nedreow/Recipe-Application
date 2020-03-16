@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Recipe_Application
 {
-    class Ingredient
+    public class Ingredient
     {
         public string Name { get; }
 
