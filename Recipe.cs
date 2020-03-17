@@ -71,6 +71,20 @@ namespace Recipe_Application
         public void AddIngredient(Ingredient ingredient, int amount = 1)
         {
             Ingredients.Add(ingredient, amount);
+
+            foreach (var nutrient in ingredient.NutritionalValues)
+            {
+                int nutrients = amount * nutrient.Value;
+
+                if (NutritionTable.NutritionValues.ContainsKey(nutrient.Key))
+                {
+                    NutritionTable.NutritionValues[nutrient.Key] = NutritionTable.NutritionValues[nutrient.Key] + nutrients;
+                }
+                else
+                {
+                    NutritionTable.NutritionValues.Add(nutrient.Key, nutrients);
+                }
+            }
         }
 
         public void AddCookingStep(string step, int index = -1)
