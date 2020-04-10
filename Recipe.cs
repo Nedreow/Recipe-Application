@@ -22,9 +22,11 @@ namespace Recipe_Application
 
         public int Portions { get; set; }
 
+        public User User { get; }
+
         public List<string> Commentary { get; set; }
 
-        public Recipe(string name, string description, int time, int portions, List<string> cookingSteps, Dictionary<Ingredient, int> ingredients, List<string> commentary = null)
+        public Recipe(string name, string description, int time, int portions, List<string> cookingSteps, Dictionary<Ingredient, int> ingredients, List<string> commentary = null, User user = null)
         {
             Name = name;
             Description = description;
@@ -42,6 +44,8 @@ namespace Recipe_Application
             AllergyWarnings = new AllergyWarnings(allergyLists);
             
             NutritionTable = CreateNutritionTable();
+
+            User = user ?? User.GetDefaultUser();
         }
 
         public NutritionTable CreateNutritionTable()
